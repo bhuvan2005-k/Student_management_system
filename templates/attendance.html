@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Attendance for {{ student.name }}</h2>
+
+<form method="POST" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" id="date" name="date" class="form-control" required max="{{ date.today().isoformat() }}">
+    </div>
+    <div class="col-md-4">
+        <label for="status" class="form-label">Status</label>
+        <select name="status" id="status" class="form-select" required>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+        </select>
+    </div>
+    <div class="col-md-4 align-self-end">
+        <button type="submit" class="btn btn-primary">Add / Update Attendance</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back</a>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Date</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+        {% for att in attendance_records %}
+        <tr>
+            <td>{{ att.date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ att.status }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="2" class="text-center">No attendance records found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
