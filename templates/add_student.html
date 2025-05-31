@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Student</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label>Roll Number</label>
+        <input type="text" name="roll_no" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Date of Birth</label>
+        <input type="date" name="dob" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Age</label>
+        <input type="number" name="age" class="form-control" min="1" required />
+    </div>
+    <div class="mb-3">
+        <label>Gender</label>
+        <select name="gender" class="form-control">
+            <option value="" selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Grade</label>
+        <input type="text" name="grade" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Contact</label>
+        <input type="text" name="contact" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Add Student</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
