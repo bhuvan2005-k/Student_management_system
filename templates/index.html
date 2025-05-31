@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h1><b>Student Management System</b></h1>
+<style>
+    h1{
+        font-family: 'Times New Roman', Times, serif;
+    }
+</style>
+<br>
+<a href="{{ url_for('add_student') }}" class="btn btn-primary mb-3">Add New Student</a>
+<!-- Search Form -->
+<form method="get" action="{{ url_for('search_students') }}" style="margin-bottom: 20px;">
+    <input type="text" name="query" placeholder="Search by name or roll number" value="{{ query or '' }}">
+    <button type="submit" class="btn btn-outline-primary">Search</button>
+    <a href="{{ url_for('index') }}"><button type="button" class="btn btn-outline-secondary">Show All</button></a>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Grade</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.roll_no }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.dob.strftime('%Y-%m-%d') if student.dob else '' }}</td>
+            <td>{{ student.age }}</td>
+            <td>{{ student.gender }}</td>
+            <td>{{ student.grade }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.contact }}</td>
+            <td>
+                <a href="{{ url_for('update_student', student_id=student.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                <form action="{{ url_for('delete_student', student_id=student.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                <a href="{{ url_for('manage_attendance', student_id=student.id) }}" class="btn btn-info btn-sm">Attendance</a>
+                <a href="{{ url_for('messages', student_id=student.id) }}" class="btn btn-secondary btn-sm">Messages</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="9" class="text-center">No students found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
