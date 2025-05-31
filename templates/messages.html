@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Messages for {{ student.name }}</h2>
+
+<form method="POST" class="mb-4">
+    <div class="mb-3">
+        <label>Sender</label>
+        <select name="sender" class="form-select" required>
+            <option value="">-- Select Sender --</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Parent">Parent</option>
+            <option value="Student">Student</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Message</label>
+        <textarea name="content" class="form-control" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Message</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Back</a>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>Timestamp</th><th>Sender</th><th>Content</th></tr>
+    </thead>
+    <tbody>
+        {% for msg in messages %}
+        <tr>
+            <td>{{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ msg.sender }}</td>
+            <td>{{ msg.content }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" class="text-center">No messages found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
